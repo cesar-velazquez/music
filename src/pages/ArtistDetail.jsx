@@ -9,6 +9,8 @@ const ArtistDetail = () => {
   const [artist, setArtist] = useState(null)
   const {id} = useParams()
 
+  
+
   useEffect(()=>{
     axiosMusic
       .get(`/api/artists/${id}`)

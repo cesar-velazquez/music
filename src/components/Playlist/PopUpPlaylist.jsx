@@ -1,101 +1,128 @@
-import React, { useState } from 'react'
-import { EditIcon } from '../../shared/Icons'
-import './PopUpPlaylist.css'
-import ListCartPlaylist from './ListCartPlaylist'
-import { usePlaylistCart } from '../../store/playlistCart'
-import { axiosMusic } from '../../Utils/axios.Config'
+import React, { useState } from "react";
+import { EditIcon } from "../../shared/Icons";
+import "./PopUpPlaylist.css";
+import ListCartPlaylist from "./ListCartPlaylist";
+import { usePlaylistCart } from "../../store/playlistCart";
+import { axiosMusic } from "../../Utils/axios.Config";
+import Swal from "sweetalert2";
 
 const PopUpPlaylist = ({ isShowCurrentPlaylist }) => {
-    const [isShowSideA, setIsShowSideA] = useState(true)
-    const tracks = usePlaylistCart(store => store.tracks)
-    const cleantracks = usePlaylistCart(store => store.cleanTracks)
+    const [isShowSideA, setIsShowSideA] = useState(true);
+    const tracks = usePlaylistCart((store) => store.tracks);
+    const cleantracks = usePlaylistCart((store) => store.cleanTracks);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const data = Object.fromEntries(new FormData(e.target))
-        data.tracks = tracks        
+        const data = Object.fromEntries(new FormData(e.target));
+        data.tracks = tracks;
         axiosMusic
             .post("/api/playlists", data)
             .then(() => {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "La Dedicatoria ha sido guardada.!",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
                 e.target.reset();
-                cleantracks()
+                cleantracks();
             })
-            .catch((err) => console.log(err))
-    }
+            .catch((err) => console.log(err));
+    };
 
     return (
-        <article className={`absolute w-[272px] z-10 -bottom-4 translate-y-full  
+        <article
+            className={`absolute w-[272px] z-10 -bottom-4 translate-y-full  
         grid bg-purple-light p-4 rounded-lg border border-yellow-border
         uppercase font-semibold transition-[right] duration-500 right-4 
-        ${isShowCurrentPlaylist == true ?
-                "right-4"
-                :
-                "right-full"
-            }
-            `} >
+        ${isShowCurrentPlaylist == true ? "right-4" : "right-full"}
+            `}
+        >
             <form
                 onSubmit={handleSubmit}
-                id='formPlayListCart'
-                className={`relative card ${isShowSideA ? "sideA" : "sideB"}`}>
+                id="formPlayListCart"
+                className={`relative card ${isShowSideA ? "sideA" : "sideB"}`}
+            >
                 {/* lado a */}
-                <div className='relative front' >
-                    <img className='mx-auto' src="/imgs/cassette.png" alt="Playlist" />
-                    <div className='flex items-center gap-2 bg-white
-                    absolute top-4 left-3 rounded-md px-2 w-[205px] '>
+                <div className="relative front">
+                    <img className="mx-auto" src="/imgs/cassette.png" alt="Playlist" />
+                    <div
+                        className="flex items-center gap-2 bg-white
+                    absolute top-4 left-3 rounded-md px-2 w-[205px] "
+                    >
                         <input
-                            className='text-black text-center bg-transparent outline-none p-1 
-                        text-sm flex-1'
+                            className="text-black text-center bg-transparent outline-none p-1 
+                        text-sm flex-1"
                             type="text"
-                            placeholder='Título'
+                            placeholder="Título"
                             size={10}
-                            name='title'
+                            name="title"
                             required
-                            onFocus={()=> setIsShowSideA(true) }
+                            onFocus={() => setIsShowSideA(true)}
                         />
-                        <label><EditIcon /></label>
+                        <label>
+                            <EditIcon />
+                        </label>
                     </div>
                 </div>
 
                 {/* lado b  */}
-                <div className='absolute top-0 left-[3px] back ' >
-                    <img className='mx-auto' src="/imgs/cassette.png" alt="" />
-                    <div className='flex items-center gap-2 bg-white
-                    absolute top-4 left-3 rounded-md px-2 w-[205px] '>
+                <div className="absolute top-0 left-[3px] back ">
+                    <img className="mx-auto" src="/imgs/cassette.png" alt="" />
+                    <div
+                        className="flex items-center gap-2 bg-white
+                    absolute top-4 left-3 rounded-md px-2 w-[205px] "
+                    >
                         <input
-                            className='text-black bg-transparent outline-none p-1 
-                        text-sm flex-1'
+                            className="text-black bg-transparent outline-none p-1 
+                        text-sm flex-1"
                             type="text"
-                            placeholder='Para:'
+                            placeholder="Para:"
                             size={10}
-                            name='to'
+                            name="to"
                             required
-                            onFocus={()=> setIsShowSideA(false) }
+                            onFocus={() => setIsShowSideA(false)}
                         />
-                        <label><EditIcon /></label>
+                        <label>
+                            <EditIcon />
+                        </label>
                     </div>
-                    <div className='flex items-center gap-2 bg-white
-                    absolute top-12 left-3 rounded-md px-2 w-[205px] '>
+                    <div
+                        className="flex items-center gap-2 bg-white
+                    absolute top-12 left-3 rounded-md px-2 w-[205px] "
+                    >
                         <textarea
-                            className='text-black text-center bg-transparent 
-                            outline-none p-1 text-sm flex-1 resize-none'
+                            className="text-black text-center bg-transparent 
+                            outline-none p-1 text-sm flex-1 resize-none"
                             type="text"
-                            placeholder='Dedicatoria'
+                            placeholder="Dedicatoria"
                             rows={4}
-                            size={10}                            
-                            name='message'
+                            size={10}
+                            name="message"
                             required
-                            onFocus={()=> setIsShowSideA(false) }
+                            onFocus={() => setIsShowSideA(false)}
                         />
                     </div>
                 </div>
             </form>
-            <button onClick={() => setIsShowSideA(!isShowSideA)} className=''>
-                {isShowSideA ? "Lado B" : "Lado A"}
+            <button
+                onClick={() => setIsShowSideA(!isShowSideA)}
+                className="px-4 py-2 hover:text-purple-500 transition-colors 
+            duration-500 border-2 border-purple-200 hover:bg-white outline-none 
+            w-[180px] mx-auto rounded-full "
+            >
+                {isShowSideA ? "Girar" : "Girar"}
             </button>
             <ListCartPlaylist tracks={tracks} />
-            <button form='formPlayListCart'>Crear</button>
+            <button
+                className="px-4 m-4 rounded-full w-[100px] mx-auto bg-white text-black  "
+                form="formPlayListCart"
+            >
+                Crear
+            </button>
         </article>
-    )
-}
+    );
+};
 
-export default PopUpPlaylist
+export default PopUpPlaylist;

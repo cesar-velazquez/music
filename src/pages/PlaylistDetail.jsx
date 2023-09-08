@@ -149,6 +149,7 @@ const PlaylistDetail = () => {
       <ListPlaylistDetail
         tracks={playlistInfo?.tracks ?? []}
         handleDelete={handleDelete}
+        showDeletebtn
       />
     </ContainerMusic>
   )

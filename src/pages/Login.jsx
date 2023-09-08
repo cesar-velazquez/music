@@ -52,8 +52,7 @@ const Login = () => {
         >Entrar</button>
         <Link
           className='text-center text-sm underline'
-          to={"/auth/register"} > O crear una cuenta nueva</Link>
-          <h1>{login.name}</h1>
+          to={"/auth/register"} > O crear una cuenta nueva</Link>          
       </form>
     </ContainerAuth>
   )

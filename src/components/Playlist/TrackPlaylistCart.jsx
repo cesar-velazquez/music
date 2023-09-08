@@ -13,7 +13,7 @@ const TrackPlaylistCart = ({ track }) => {
             </header>
 
             <section className='flex-1 text-sm sm:text-base'>
-                <Link to={`/tracks/${track.id}}`} className='font-semibold line-clamp-1' >{track.name}</Link>
+                <Link to={`/tracks/${track.id}`} className='font-semibold line-clamp-1' >{track.name}</Link>
                 <Link to={`/artists/${track.artists[0].id}`} className='text-slate-300 text-xs font-light line-clamp-1' >{track.artists[0].name}</Link>
             </section>
             <section className='flex items-center gap-2'>

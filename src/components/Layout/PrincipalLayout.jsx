@@ -10,9 +10,15 @@ const PrincipalLayout = ({ children }) => {
     const tracks = usePlaylistCart(store => store.tracks)
 
     const logout = useUserInfo(state => state.logout)
+    const cleanTracks = usePlaylistCart((store) => store.cleanTracks)
     const [isShowCurrentPlaylist, setIsShowCurrentPlaylist] = useState(false)
     const [isShowAuthOptions, setIsShowAuthOptions] = useState(false)
-    // const logout = useUserInfo((state) => state.logout)
+    
+    
+    const handleClickLogOut = () =>{
+        logout()
+        cleanTracks()
+    }
 
 
     return (
@@ -49,7 +55,7 @@ const PrincipalLayout = ({ children }) => {
                         <MinimalPlayIcon />
                         Mis Grabaciones</Link>
                     <button
-                        onClick={logout}
+                        onClick={handleClickLogOut}
                         className='flex gap-2 items-center group hover:text-yellow-border
                     ' ><LogOutIcon />
                         Cerrar Sesión
