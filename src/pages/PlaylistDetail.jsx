@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ContainerMusic from '../components/Layout/ContainerMusic'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { EditIcon, SaveIcon, ShareIcon, TrashIcon } from '../shared/Icons'
+import { EditIcon, ReturnIcon, SaveIcon, ShareIcon, TrashIcon } from '../shared/Icons'
 import { axiosMusic } from '../Utils/axios.Config'
 import ListPlaylistDetail from '../components/PlaylistDetail/ListPlaylistDetail'
 
@@ -143,8 +143,11 @@ const PlaylistDetail = () => {
         </div>
       </form>
       <button onClick={() => setIsShowSideA(!isShowSideA)}
-        className='block mx-auto my-4'>
-        {isShowSideA ? "Lado B" : "Lado A"}
+        className='flex gap-2 mx-auto my-4 group font-semibold
+        bg-purple-400 px-2 py-1 rounded-3xl border border-yellow-border
+        hover:bg-black '>
+        {isShowSideA ? `Lado B ` : "Lado A"}
+        <ReturnIcon />
       </button>
       <ListPlaylistDetail
         tracks={playlistInfo?.tracks ?? []}
